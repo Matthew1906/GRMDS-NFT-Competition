@@ -1,14 +1,10 @@
+from preprocessing import *
 import pandas as pd
 import numpy as np
 
-assets = pd.read_csv('./cleaned-datasets/cleaned_assets.csv')
-collections = pd.read_csv('./cleaned-datasets/cleaned_collections.csv')
-events = pd.read_csv('./cleaned-datasets/cleaned_events.csv')
-
-assets['asset_contract_created_date'] = pd.to_datetime(assets['asset_contract_created_date'], format='%Y-%m-%dT%H:%M:%S')
-
-## Adding year created in assets dataframe
-assets['created_year'] = assets['asset_contract_created_date'].dt.year
+assets = get_assets()
+events = get_events()
+collections = get_collections()
 
 top10nft = assets.sort_values('num_sales', ascending=False)[['collection_slug','token_id','name','asset_category','created_year','num_sales']].head(10)
 

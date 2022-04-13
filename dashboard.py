@@ -18,7 +18,8 @@ app = Dash(__name__)
 
 app.layout = html.Div(children=[
     html.H1('Top 10 NFT Transactions'),
-    html.Div(child=dash_table.DataTable(top10nft.to_dict('records'), [{"name": i, "id": i} for i in top10nft.columns]), 
+    html.Div(
+        children=dash_table.DataTable(top10nft.to_dict('records'), [{"name": i, "id": i} for i in top10nft.columns]), 
         style={
             'width': '720px'
         }

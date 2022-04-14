@@ -15,26 +15,58 @@ import plotly.graph_objs as go
 
 app = Dash(__name__)
 
+fig1 = {
+    'data': [
+        go.Scatter(
+            x = assets['asset_favorites'],
+            y = assets['last_sale_total_price'],
+            mode = 'markers'
+        )
+    ],
+    'layout': go.Layout(
+        title = 'Scatter plot of asset favorites and last sale total price',
+        xaxis = {'title': 'Asset Favorites'},
+        yaxis = {'title': 'Last Sale Total Price'}
+    )
+}
+
+fig2 = {
+    'data': [
+        go.Scatter(
+            x = assets['asset_favorites'],
+            y = assets['num_sales'],
+            mode = 'markers'
+        )
+    ],
+    'layout': go.Layout(
+        title = 'Scatter plot of asset favorites and num sales',
+        xaxis = {'title': 'Asset Favorites'},
+        yaxis = {'title': 'Num Sales'}
+    )
+}
+
+fig3 = {
+    'data': [
+        go.Scatter(
+            x = assets['num_sales'],
+            y = assets['last_sale_total_price'],
+            mode = 'markers'
+        )
+    ],
+    'layout': go.Layout(
+        title = 'Scatter plot of num sales and last sale total price',
+        xaxis = {'title': 'Num Sales'},
+        yaxis = {'title': 'Last Sale Total Price'}
+    )
+}
+
 app.layout = html.Div(children=[
     html.H1('How popularity & total transactions affect an NFT price'),
     html.Div(children=[
         html.Div(
             dcc.Graph(
                 id='scatter1',
-                figure = {
-                    'data': [
-                        go.Scatter(
-                            x = assets['asset_favorites'],
-                            y = assets['last_sale_total_price'],
-                            mode = 'markers'
-                        )
-                    ],
-                    'layout': go.Layout(
-                        title = 'Scatter plot of asset favorites and last sale total price',
-                        xaxis = {'title': 'Asset Favorites'},
-                        yaxis = {'title': 'Last Sale Total Price'}
-                    )
-                }
+                figure = fig1
             )
         )
     ]),
@@ -42,20 +74,7 @@ app.layout = html.Div(children=[
         html.Div(
             dcc.Graph(
                 id='scatter2',
-                figure = {
-                    'data': [
-                        go.Scatter(
-                            x = assets['asset_favorites'],
-                            y = assets['num_sales'],
-                            mode = 'markers'
-                        )
-                    ],
-                    'layout': go.Layout(
-                        title = 'Scatter plot of asset favorites and num sales',
-                        xaxis = {'title': 'Asset Favorites'},
-                        yaxis = {'title': 'Num Sales'}
-                    )
-                }
+                figure = fig2
             )
         )
     ]),
@@ -63,20 +82,7 @@ app.layout = html.Div(children=[
         html.Div(
             dcc.Graph(
                 id='scatter3',
-                figure = {
-                    'data': [
-                        go.Scatter(
-                            x = assets['num_sales'],
-                            y = assets['last_sale_total_price'],
-                            mode = 'markers'
-                        )
-                    ],
-                    'layout': go.Layout(
-                        title = 'Scatter plot of num sales and last sale total price',
-                        xaxis = {'title': 'Num Sales'},
-                        yaxis = {'title': 'Last Sale Total Price'}
-                    )
-                }
+                figure = 
             )
         )
     ])

@@ -82,7 +82,7 @@ app.layout = html.Div(children=[
         html.Div(
             dcc.Graph(
                 id='scatter3',
-                figure = 
+                figure = fig3
             )
         )
     ])

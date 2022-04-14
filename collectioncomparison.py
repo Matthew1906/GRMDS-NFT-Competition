@@ -27,7 +27,7 @@ app = Dash(__name__)
 app.layout = html.Div(children=[
     html.H1('Collection Comparison'),
     html.Div(
-        children=dash_table.DataTable(collections_by_slug.head(10).to_dict('records'), [{"name": i, "id": i} for i in collections_by_slug.columns]), 
+        children=dash_table.DataTable(collections_by_slug.to_dict('records'), [{"name": i, "id": i} for i in collections_by_slug.columns]), 
         style={
             'width': '720px'
         }

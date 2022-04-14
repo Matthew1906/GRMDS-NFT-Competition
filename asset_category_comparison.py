@@ -32,7 +32,10 @@ app.layout = html.Div(
     Input(component_id='asset-category-compare-choice', component_property='value'),
 )
 def update_graph(choice):
-    return px.bar(data_frame = category_comparison.reset_index(), x='asset_category', y=choice)
+    fig = px.bar(data_frame = category_comparison.reset_index(), x='asset_category', y=choice,
+    color='asset_category')
+    fig.update_layout(showlegend=False)
+    return fig
 
 if __name__ == "__main__":
     app.run_server(debug=True)

@@ -49,5 +49,7 @@ app.layout = dbc.Container(children=[
     ], className="bg-primary p-2")
 ])
 
+## Callbacks
+
 if __name__ == "__main__":
     app.run_server(debug=True)

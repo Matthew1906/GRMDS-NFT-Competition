@@ -14,6 +14,11 @@ def get_assets():
     assets['asset_favorites'] = assets['asset_favorites'].astype('int64')
     # Adding year created in assets dataframe
     assets['created_year'] = assets['asset_contract_created_date'].dt.year
+    # Drop Unnecessary column
+    assets.drop('token_id', axis='columns', inplace=True)
+    # Rename columns 
+    assets.columns = assets.columns.str.replace("_", " ")
+    assets.columns = assets.columns.str.title()
     return assets
 
 def get_events():
@@ -30,9 +35,13 @@ def get_events():
     events[categories] = events[categories].astype('category')
     # Convert numerical strings
     events[numerics] = events[numerics].astype('float64')
+    events.columns = events.columns.str.replace("_", " ")
+    events.columns = events.columns.str.title()
     return events
 
 def get_collections():
     collections = pd.read_csv("./cleaned-datasets/cleaned_collections.csv")
     collections['created_date'] = pd.to_datetime(collections['created_date'], format='%Y-%m-%dT%H:%M:%S')
+    collections.columns = collections.columns.str.replace("_", " ")
+    collections.columns = collections.columns.str.title()
     return collections

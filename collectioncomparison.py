@@ -39,7 +39,9 @@ app.layout = html.Div(
     Input(component_id='collection-comparison-choice', component_property='value'),
 )
 def update_graph(choice):
-    return px.bar(data_frame = collections_by_slug.reset_index().head(100), x='slug', y=choice)
+    fig = px.bar(data_frame = collections_by_slug.reset_index().head(100), x=choice, y='slug', color='slug')
+    fig.update_layout(height=2000, yaxis={'categoryorder':'total ascending'}, showlegend=False)
+    return fig
 
 if __name__ == "__main__":
     app.run_server(debug=True)

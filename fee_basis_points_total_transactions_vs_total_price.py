@@ -6,7 +6,6 @@ from preprocessing import get_assets
 app = Dash(__name__, suppress_callback_exceptions=True)
 
 assets = get_assets()
-``
 assets_sold = assets[assets['last_sale_created_date'].notna()]
 fig = px.scatter(assets_sold['last_sale_total_price'], 
                 assets_sold['asset_contract_dev_seller_fee_basis_points'],

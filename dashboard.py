@@ -36,14 +36,16 @@ app.layout = dbc.Container(children=[
     ### Static Dashboard
     dbc.Row(children=[
         dbc.Col(children=[
-            html.H4("Best Listing Duration")
-        ], className="col-sm-12 col-md-12 col-lg-4 bg-secondary"),
-        dbc.Col(children=[
             html.H4("Fee Basis Points, Popularity, Total Transactions vs. NFT Price")
-        ], className="col-sm-12 col-md-12 col-lg-4 bg-secondary"),
+        ], className="col-sm-12 col-md-12 col-lg-7 bg-secondary"),
         dbc.Col(children=[
-            html.H4("Tokens Statistics for Transaction")
-        ], className="col-sm-12 col-md-12 col-lg-4 bg-secondary")
+            dbc.Row(children=[
+                html.H4("Best Listing Duration")
+            ], className="bg-secondary"),
+            dbc.Row(children=[
+                html.H4("Tokens Statistics for Transaction")
+            ], className="bg-secondary")
+        ], className="col-sm-12 col-md-12 col-lg-5")
     ], className="bg-primary p-2")
 ])
 

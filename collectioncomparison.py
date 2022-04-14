@@ -1,5 +1,6 @@
 import pandas as pd
-import numpy as np
+import plotly.express as px
+from dash import Dash, dcc, html, dash_table, Input, Output
 
 assets = pd.read_csv('./cleaned-datasets/cleaned_assets.csv')
 collections = pd.read_csv('./cleaned-datasets/cleaned_collections.csv')
@@ -18,21 +19,27 @@ aggregate = {
     'stats_average_price': 'sum'
 }
 collections_by_slug = collections.groupby('slug')[['stats_total_volume', 'stats_market_cap', 'stats_total_sales', 'stats_num_owners', 'stats_average_price']].agg(aggregate).sort_values('stats_total_sales', ascending=False)
-collections_by_slug.reset_index(inplace=True)
 
-from dash import Dash, dcc, html, dash_table
+app = Dash(__name__, suppress_callback_exceptions=True)
 
-app = Dash(__name__)
+app.layout = html.Div(
+    children=[
+        html.H1('Collection Comparison'),
+        dcc.Dropdown(
+            options = ['stats_total_volume', 'stats_market_cap', 'stats_total_sales', 'stats_num_owners', 'stats_average_price'],
+            value = ['stats_total_volume'],
+            id='collection-comparison-choice'
+        ),
+        dcc.Graph(id='collection-comparison-graph')
+    ]
+)
 
-app.layout = html.Div(children=[
-    html.H1('Collection Comparison'),
-    html.Div(
-        children=dash_table.DataTable(collections_by_slug.head(10).to_dict('records'), [{"name": i, "id": i} for i in collections_by_slug.columns]), 
-        style={
-            'width': '720px'
-        }
-    )
-])
+@app.callback(
+    Output(component_id='collection-comparison-graph', component_property='figure'),
+    Input(component_id='collection-comparison-choice', component_property='value'),
+)
+def update_graph(choice):
+    return px.bar(data_frame = collections_by_slug.reset_index().head(100), x='slug', y=choice)
 
 if __name__ == "__main__":
     app.run_server(debug=True)

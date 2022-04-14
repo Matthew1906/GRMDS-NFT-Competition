@@ -2,7 +2,7 @@ import pandas as pd
 
 def get_assets():
     ''' Convert the data types of the assets dataset'''
-    assets = pd.read_csv('./cleaned-datasets/cleaned_assets.csv')
+    assets = pd.read_csv('./app/models/cleaned-datasets/cleaned_assets.csv')
     # convert timestamps/datetime
     timestamps = ['last_sale_transaction_timestamp', 'last_sale_event_timestamp', 'last_sale_created_date', 'asset_contract_created_date']
     for timestamp in timestamps:
@@ -23,7 +23,7 @@ def get_assets():
 
 def get_events():
     '''Convert the data types of the events dataset'''
-    events = pd.read_csv('./cleaned-datasets/cleaned_events.csv')
+    events = pd.read_csv('./app/models/cleaned-datasets/cleaned_events.csv')
     # Listing all necessary changes
     timestamps = ['listing_time', 'created_date']
     categories = ['event_type', 'auction_type']
@@ -40,8 +40,11 @@ def get_events():
     return events
 
 def get_collections():
-    collections = pd.read_csv("./cleaned-datasets/cleaned_collections.csv")
+    collections = pd.read_csv("./app/models/cleaned-datasets/cleaned_collections.csv")
     collections['created_date'] = pd.to_datetime(collections['created_date'], format='%Y-%m-%dT%H:%M:%S')
     collections.columns = collections.columns.str.replace("_", " ")
     collections.columns = collections.columns.str.title()
     return collections
+
+def get_listings():
+    return pd.read_csv('./app/models/cleaned-datasets/best_listing.csv')

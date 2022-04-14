@@ -12,80 +12,31 @@ assets['created_year'] = assets['asset_contract_created_date'].dt.year
 
 from dash import Dash, dcc, html, dash_table
 import plotly.graph_objs as go
+from plotly.subplots import make_subplots
 
 app = Dash(__name__)
 
-fig1 = {
-    'data': [
-        go.Scatter(
-            x = assets['asset_favorites'],
-            y = assets['last_sale_total_price'],
-            mode = 'markers'
-        )
-    ],
-    'layout': go.Layout(
-        title = 'Scatter plot of asset favorites and last sale total price',
-        xaxis = {'title': 'Asset Favorites'},
-        yaxis = {'title': 'Last Sale Total Price'}
-    )
-}
+fig = make_subplots(rows=3, cols=1, subplot_titles=("Scatter plot of asset favorites and last sale total price", "Scatter plot of asset favorites and num sales", "Scatter plot of num sales and last sale total price"))
 
-fig2 = {
-    'data': [
-        go.Scatter(
-            x = assets['asset_favorites'],
-            y = assets['num_sales'],
-            mode = 'markers'
-        )
-    ],
-    'layout': go.Layout(
-        title = 'Scatter plot of asset favorites and num sales',
-        xaxis = {'title': 'Asset Favorites'},
-        yaxis = {'title': 'Num Sales'}
-    )
-}
+fig.add_trace(go.Scatter(x=assets['asset_favorites'], y=assets['last_sale_total_price'], mode='markers'), row=1, col=1)
+fig.add_trace(go.Scatter(x=assets['asset_favorites'], y=assets['num_sales'], mode='markers'), row=2, col=1)
+fig.add_trace(go.Scatter(x=assets['num_sales'], y=assets['last_sale_total_price'], mode='markers'), row=3, col=1)
 
-fig3 = {
-    'data': [
-        go.Scatter(
-            x = assets['num_sales'],
-            y = assets['last_sale_total_price'],
-            mode = 'markers'
-        )
-    ],
-    'layout': go.Layout(
-        title = 'Scatter plot of num sales and last sale total price',
-        xaxis = {'title': 'Num Sales'},
-        yaxis = {'title': 'Last Sale Total Price'}
-    )
-}
+fig.update_xaxes(title_text="Asset Favorites", row=1, col=1)
+fig.update_xaxes(title_text="Asset Favorites", row=2, col=1)
+fig.update_xaxes(title_text="Num Sales", row=3, col=1)
+
+fig.update_yaxes(title_text="Last Sale Total Price", row=1, col=1)
+fig.update_yaxes(title_text="Num Sales", row=2, col=1)
+fig.update_yaxes(title_text="Last Sale Total Price", row=3, col=1)
+
+fig.update_layout(height=700, showlegend=False)
 
 app.layout = html.Div(children=[
     html.H1('How popularity & total transactions affect an NFT price'),
-    html.Div(children=[
-        html.Div(
-            dcc.Graph(
-                id='scatter1',
-                figure = fig1
-            )
-        )
-    ]),
-    html.Div(children=[
-        html.Div(
-            dcc.Graph(
-                id='scatter2',
-                figure = fig2
-            )
-        )
-    ]),
-    html.Div(children=[
-        html.Div(
-            dcc.Graph(
-                id='scatter3',
-                figure = fig3
-            )
-        )
-    ])
+    dcc.Graph(
+        figure = fig
+    )
 ])
 
 if __name__ == "__main__":

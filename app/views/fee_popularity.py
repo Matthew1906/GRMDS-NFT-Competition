@@ -4,7 +4,7 @@ from plotly.subplots import make_subplots
 
 def get_layout(assets):
     assets_sold = assets[assets['Last Sale Created Date'].notna()]
-    this_figure = make_subplots(rows=3, cols=1, subplot_titles=("Fee Basis Points vs Total Price", "Scatter plot of asset favorites and last sale total price", "Scatter plot of num sales and last sale total price"))
+    this_figure = make_subplots(rows=1, cols=3, subplot_titles=("Fee Basis Points vs Last Sale Total Price", "Asset Favorites vs Last Sale Total Price", "Num Sales vs Last Sale Total Price"))
     figure1 = px.scatter(
         assets_sold, 
         x='Last Sale Total Price', 
@@ -13,6 +13,8 @@ def get_layout(assets):
         trendline="ols",
         trendline_color_override="red"
     )
+
+    # figure1.update_layout(yaxis=dict(range=[0,1000]))
 
     figure2 = px.scatter(
         assets, 
@@ -49,24 +51,26 @@ def get_layout(assets):
         this_figure.append_trace(traces, row=1, col=1)
 
     for traces in figure2_traces:
-        this_figure.append_trace(traces, row=2, col=1)
+        this_figure.append_trace(traces, row=1, col=2)
         
     for traces in figure3_traces:
-        this_figure.append_trace(traces, row=3, col=1)
+        this_figure.append_trace(traces, row=1, col=3)
 
-    this_figure.update_layout(height=1000, showlegend=False)
+    this_figure.update_layout(height=500, showlegend=False)
 
     this_figure.update_xaxes(title_text='Last Sale Total Price', row=1, col=1)
-    this_figure.update_xaxes(title_text='Last Sale Total Price', row=2, col=1)
-    this_figure.update_xaxes(title_text='Last Sale Total Price', row=3, col=1)
+    this_figure.update_xaxes(title_text='Last Sale Total Price', row=1, col=2)
+    this_figure.update_xaxes(title_text='Last Sale Total Price', row=1, col=3)
 
-    this_figure.update_yaxes(title_text='Asset Contract Dev Seller Basis Points', row=1, col=1)
-    this_figure.update_yaxes(title_text='Asset Favorites', row=2, col=1)
-    this_figure.update_yaxes(title_text='Num Sales', row=3, col=1)
+    this_figure.update_yaxes(title_text='Asset Contract Dev Seller Basis Points', row=1, col=1, range=[-50,1050])
+    this_figure.update_yaxes(title_text='Asset Favorites', row=1, col=2)
+    this_figure.update_yaxes(title_text='Num Sales', row=1, col=3)
 
     return html.Div(children=[
-        html.H1('How popularity & total transactions affect an NFT price'),
+        html.H1('How popularity & total transactions affect an NFT price', className="font-semibold text-xl"),
         dcc.Graph(
             figure = this_figure
         )
-    ])
+    ],
+    className="bg-white p-8 rounded-md shadow-md col-span-12")
+    

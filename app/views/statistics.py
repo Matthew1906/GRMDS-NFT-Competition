@@ -13,7 +13,7 @@ def get_layout(assets):
         legend = {
             'font' : {
                 'family':"Arial", 
-                'size':16, 
+                'size':14, 
                 'color':"black"
             }, 
             "orientation":"h", 
@@ -25,9 +25,10 @@ def get_layout(assets):
     )
     return html.Div(
         children=[
-            html.H1("Fee Basis Points & Total Transactions vs. Total Price"),
+            html.H1("Distributions of Token Symbols Out Of All NFT Transactions", className="font-semibold text-xl"),
             html.Div(
                 dcc.Graph(id="pie_plt", figure=fig)
             )
-        ]
+        ],
+        className="bg-white p-8 rounded-md shadow-md flex flex-col justify-between row-start-3 col-span-4"
     )

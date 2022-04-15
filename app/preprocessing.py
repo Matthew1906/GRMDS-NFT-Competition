@@ -6,7 +6,7 @@ def get_assets():
     # convert timestamps/datetime
     timestamps = ['last_sale_transaction_timestamp', 'last_sale_event_timestamp', 'last_sale_created_date', 'asset_contract_created_date']
     for timestamp in timestamps:
-        assets[timestamp] = pd.to_datetime(assets[timestamp], format='%Y-%m-%dT%H:%M:%S')
+        assets[timestamp] = pd.to_datetime(assets[timestamp], format = '%Y-%m-%dT%H:%M:%S')
     # Convert categorical string
     assets['asset_category'] = assets['asset_category'].astype('category')
     # Convert numerical strings into numerical datatypes
@@ -15,7 +15,7 @@ def get_assets():
     # Adding year created in assets dataframe
     assets['created_year'] = assets['asset_contract_created_date'].dt.year
     # Drop Unnecessary column
-    assets.drop('token_id', axis='columns', inplace=True)
+    assets.drop('token_id', axis = 'columns', inplace = True)
     # Rename columns 
     assets.columns = assets.columns.str.replace("_", " ")
     assets.columns = assets.columns.str.title()
@@ -30,7 +30,7 @@ def get_events():
     numerics = ['total_price', 'ending_price', 'starting_price']
     # Convert datetime
     for timestamp in timestamps:
-        events[timestamp] = pd.to_datetime(events[timestamp], format='%Y-%m-%dT%H:%M:%S')
+        events[timestamp] = pd.to_datetime(events[timestamp], format = '%Y-%m-%dT%H:%M:%S')
     # Convert categorical data
     events[categories] = events[categories].astype('category')
     # Convert numerical strings
@@ -41,7 +41,7 @@ def get_events():
 
 def get_collections():
     collections = pd.read_csv("./app/models/cleaned-datasets/cleaned_collections.csv")
-    collections['created_date'] = pd.to_datetime(collections['created_date'], format='%Y-%m-%dT%H:%M:%S')
+    collections['created_date'] = pd.to_datetime(collections['created_date'], format = '%Y-%m-%dT%H:%M:%S')
     collections.columns = collections.columns.str.replace("_", " ")
     collections.columns = collections.columns.str.title()
     return collections

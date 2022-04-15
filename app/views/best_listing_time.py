@@ -1,4 +1,3 @@
-import dash_bootstrap_components as dbc
 import plotly.express as px
 from dash import html, dcc
 
@@ -7,24 +6,18 @@ def get_layout(best_listing):
         best_listing, 
         x='duration_range', y='count',
         color='duration_range', text='count',
-        title='<b>Events observed based on Duration</b>',
         labels={
-            "duration_range": "<b>Duration</b>",
-            "count": "<b>No. of events observed</b>"
+            "duration_range": "Duration",
+            "count": "No. of events observed"
         }
     )
     fig.update_traces(textfont_size=12, textposition="outside", cliponaxis=False)
     fig.update_layout(showlegend=False)
-    return dbc.Container(children=[
+    return html.Div(children=[
         html.Div(children=[
-            html.H1("Best Listing Duration"),
-            dcc.Graph(figure=fig, style={
-                'width': '50%',
-                'height': '500px'
-            })
-        ], 
-            style={
-                'font-family': 'Poppins'
-            }
-        )
-    ], className="p-5")
+            html.H1("Best Listing Duration", className="font-semibold text-xl"),
+            dcc.Graph(figure=fig)
+        ])
+    ],
+    className="bg-white p-8 rounded-md shadow-md flex flex-col justify-between col-span-4"
+    )

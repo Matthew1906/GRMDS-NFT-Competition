@@ -71,7 +71,7 @@ def get_layout(assets):
 
     for col in range(1,4):
         this_figure.update_xaxes(
-            title_text = 'Last Sale Total Price (Quantillion)', 
+            title_text = 'Last Sale Total Price (Quintillion)', 
             row = 1, 
             col = col
         )

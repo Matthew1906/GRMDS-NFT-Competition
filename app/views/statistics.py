@@ -39,7 +39,7 @@ def get_layout(assets):
     return html.Div(
         children=[
             html.H1(
-                children = ["Distributions of Token Symbols Out Of All NFT Transactions"], 
+                children = ["Cryptocurrencies used in NFT Transactions"], 
                 className = "font-semibold text-xl"
             ),
             html.Div(
